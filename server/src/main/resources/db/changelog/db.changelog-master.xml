@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2021-12-14-01" author="anton.m">
+        <sql>
+            CREATE TABLE stock (
+                 id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                 symbol VARCHAR(8)
+            )
+        </sql>
+    </changeSet>
+
+    <changeSet id="2021-12-14-02" author="anton.m">
+        <sql>
+            CREATE TABLE `order` (
+                id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                version int NOT NULL,
+                quantity int NOT NULL,
+                price int NOT NULL,
+                remain int NOT NULL,
+                type ENUM('BUY', 'SELL'),
+                active bit(1) NOT NULL DEFAULT 1,
+                date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                stock_id bigint(20) NOT NULL REFERENCES stock(id)
+            )
+        </sql>
+    </changeSet>
+    <changeSet id="2021-12-14-03" author="anton.m">
+        <sql>
+            CREATE TABLE trade (
+                 id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                 sell_order_id bigint(20) NOT NULL REFERENCES `order`(id),
+                 buy_order_id bigint(20) NOT NULL REFERENCES `order`(id),
+                 quantity int NOT NULL,
+                 price int NOT NULL,
+                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+        </sql>
+    </changeSet>
+    
+</databaseChangeLog>

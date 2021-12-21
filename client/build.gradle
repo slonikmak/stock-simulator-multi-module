@@ -1,0 +1,22 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+}
+
+group 'org.anton'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework:spring-web:5.3.14'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0'
+}
+
+test {
+    useJUnitPlatform()
+}

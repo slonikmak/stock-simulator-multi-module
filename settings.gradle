@@ -1,0 +1,4 @@
+rootProject.name = 'stock-simulator-multi-module'
+include 'server'
+include 'client'
+
